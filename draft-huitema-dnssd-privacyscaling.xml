@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 
@@ -86,6 +86,20 @@
       </address>
     </author>
 
+    <author fullname="Christopher A. Wood" initials="C." surname="Wood">
+      <organization>Apple Inc.</organization>
+      <address>
+        <postal>
+          <street>One Apple Park Way</street>
+          <city>Cupertino</city>
+          <code>95014</code>
+          <region>California</region>
+          <country>U.S.A.</country>
+        </postal>
+        <email>cawood@apple.com</email>
+      </address>
+    </author>
+
     <date year="2018" />
 
     <abstract>
@@ -99,16 +113,17 @@ a serious privacy problem arises.
 <t>
 The draft currently progressing in the DNSSD Working Group assumes peer-to-peer pairing 
 between the service to be discovered and each of its client. This has good security properties, 
-but create scaling issues. Each server needs to publish as many announcements as it has paired 
-clients. Each client needs to process all announcements from all servers present in the
-network. This leads to large number of operations when each server is paired with many clients.
+but create scaling issues, because Eeach server needs to publish as many announcements as it 
+has paired clients. This leads to large number of operations when servers are paired
+with many clients.
 </t>
 <t>
-Different designs are possible. For example, if there was only one server "discovery key" known by each authorized client,
-each server would only have to announce a single record, and clients would only have to process one response for each
-server that is present on the network. Yet, these designs will present different privacy profiles, and pose different management
-challenges. This draft analyses the tradeoffs between privacy and scaling in a set of different designs, using
-either shared secrets or public keys.
+Different designs are possible. For example, if there was only one server "discovery key" known 
+by each authorized client, each server would only have to announce a single record, and clients
+would only have to process one response for each server that is present on the network. Yet, 
+these designs will present different privacy profiles, and pose different management
+challenges. This draft analyses the tradeoffs between privacy and scaling in a set of different
+designs, using either shared secrets or public keys.
 </t>
 </abstract>
 </front>
