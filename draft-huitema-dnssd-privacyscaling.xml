@@ -45,6 +45,8 @@
    "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnssd-pairing">
 <!ENTITY I-D.ietf-dnssd-privacy PUBLIC ''  
    "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnssd-privacy">
+<!ENTITY I-D.ietf-dnssd-pairing PUBLIC ''  
+   "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnssd-pairing">
 <!ENTITY kw14a PUBLIC ''
    "references/reference.kw14a.xml">
 <!ENTITY kw14b PUBLIC ''
@@ -67,7 +69,7 @@
 
 <front>
     <title abbrev="DNS-SD Privacy Scaling Tradeoffs">
-      Privacy Extensions for DNS-SD
+      DNS-SD Privacy Scaling Tradeoffs
     </title>
 
    <author fullname="Christian Huitema" initials="C." surname="Huitema">
@@ -88,15 +90,17 @@
 
     <abstract>
         <t>
-DNS-SD (DNS Service Discovery) normally discloses information about both the devices offering services and the devices requesting services.
-This information includes host names, network parameters, and possibly a further description of the corresponding service instance.
-Especially when mobile devices engage in DNS Service Discovery over Multicast DNS at a public hotspot,
+DNS-SD (DNS Service Discovery) normally discloses information about both the devices offering 
+services and the devices requesting services. This information includes host names, network 
+parameters, and possibly a further description of the corresponding service instance. Especially 
+when mobile devices engage in DNS Service Discovery over Multicast DNS at a public hotspot,
 a serious privacy problem arises.
 </t>
 <t>
-The draft currently progressing in the DNSSD Working Group assumes peer-to-peer pairing between the service to be discovered
-and each of its client. This has good security properties, but create scaling issues. Each server needs to publish as many
-announcements as it has paired clients. Each client needs to process all announcements from all servers present in the
+The draft currently progressing in the DNSSD Working Group assumes peer-to-peer pairing 
+between the service to be discovered and each of its client. This has good security properties, 
+but create scaling issues. Each server needs to publish as many announcements as it has paired 
+clients. Each client needs to process all announcements from all servers present in the
 network. This leads to large number of operations when each server is paired with many clients.
 </t>
 <t>
@@ -149,7 +153,7 @@ and privacy properties of each of them.
 </section>
 <section title="Privacy and Secrets" anchor="secrets">
 <t>
-Private discovery tries to ensure that clients and servers can discover eachother
+Private discovery tries to ensure that clients and servers can discover each other
 in a potentially hostile network context, while maintaining privacy. Unauthorized
 third parties must not be able to discover that a specific server or device is
 currently present on the network, and they must not be able to discover that a
@@ -164,7 +168,7 @@ secrets. Each client obtains a pairing secret from each
 server that they are authorized to use. The servers publish announcements
 of the form "nonce|proof", in which the proof is the hash of the nonce and the
 pairing secret. The proof is of course different for each client, because the
-secrets are different. For better scalling, the nonce is common to all clients,
+secrets are different. For better scaling, the nonce is common to all clients,
 and defined as a coarse function of time, such as the current 30 minutes
 interval.
 </t>
@@ -176,7 +180,19 @@ pairing key of an authorized client.
 </t>
 </section>
 
-<section title="Discovery secret" anchor="discosecret" >
+<section title="Group public keys" anchor="discogroupkey">
+<t>In contrast to pair-wise shared secrets, applications may associate public and private
+  key pairs with groups of equally authorized clients. This is identical to the pairwise
+  sharing case if each client is given a unique key pair. However, this option permits
+  multiple users to belong to the same group associated with a public key, depending on
+  the type of public key and cryptographic scheme used. For example, broadcast encryption
+  is a scheme where many users, each with their own private key, can access content encrypted
+  under a single broadcast key. The scaling properties of this variant depend not only
+  on how private keys are managed, but also on the associated cryptographic algorithm(s)
+  by which those keys are used.</t>
+</section>
+
+<section title="Shared symmetric secret" anchor="discosecret" >
 <t>
 Instead of using a different secret for each client as in <xref target="pairsecret"/>,
 another design is to have a single secret per server, shared by all authorized clients of
@@ -194,7 +210,7 @@ discovery secret.
 </t>
 </section>
 
-<section title="Discovery public key" anchor="discopubkey" >
+<section title="Shared public key" anchor="discopubkey" >
 <t>
 Instead of a discovery secret used in <xref target="discosecret"/>,
 clients could obtain the public keys of the servers that they are
@@ -216,9 +232,8 @@ of the form "nonce|proof", but this time they only need to publish a single
 announcement per server, because each server maintains a single discovery secret.
 The proof is obtained by either hashing the nonce with the public key,
 or using the public key to encrypt the nonce -- the point being that
-both clients and server can contruct the proof.
-Again, the nonce can be common to all clients,
-and defined as a coarse function of time.
+both clients and server can construct the proof. Again, the nonce can be 
+common to all clients, and defined as a coarse function of time.
 </t>
 <t>
 The advantage of public key based solutions is that the clients can 
@@ -229,6 +244,7 @@ authorized clients. The server should thus only accept connections from clients 
 demonstrate knowledge of its public key.
 </t>
 </section>
+
 </section>
 
 <section title="Scaling properties of different solutions" anchor="scaleprop" >
@@ -239,6 +255,9 @@ To analyze scaling issues we will use the following variables:
 <list style="hanging">
 <t hangText="N:">
 The average number of authorized clients per server.
+</t>
+<t hangText="G:">
+The average number of authorized groups per server. 
 </t>
 <t hangText="M:">
 The average number of servers per client.
@@ -257,13 +276,16 @@ to be announced per server in MDNS mode:
 <t>
 <list style="hanging" >
 <t hangText="Pairing secrets:">
-O(N). One record per client.
+O(N): One record per client.
 </t>
-<t hangText="Discovery secrets:">
-O(1). One record for all clients.
+<t hangText="Group public keys:">
+O(G): One record per group.
 </t>
-<t hangText="Discovery public key:">
-O(1). One record for all clients.
+<t hangText="Shared symmetric secret:">
+O(1): One record for all (shared) clients.
+</t>
+<t hangText="Shared public key:">
+O(1): One record for all (shared) clients.
 </t>
 </list>
 </t>
@@ -277,13 +299,16 @@ responses from each server instance supporting that type:
 <t>
 <list style="hanging" >
 <t hangText="Pairing secrets:">
-O(P*N). There are O(P) servers present, and each publishes O(N) instances.
+O(P*N): There are O(P) servers present, and each publishes O(N) instances.
 </t>
-<t hangText="Discovery secrets:">
-O(P). One record per server present.
+<t hangText="Group public keys:">
+O(P*G): There are O(P) servers present, and each publishes O(G) instances.
 </t>
-<t hangText="Discovery public key:">
-O(P). One record per server present.
+<t hangText="Shared symmetric secret:">
+O(P): One record per server present.
+</t>
+<t hangText="Shared public secret:">
+O(P): One record per server present.
 </t>
 </list>
 </t>
@@ -297,14 +322,18 @@ query for these instance names:
 <t>
 <list style="hanging" >
 <t hangText="Pairing secrets:">
-O(M). The client will compose O(M) queries to discover all the
+O(M): The client will compose O(M) queries to discover all the
 servers that it is interested in. There will be at most O(M) responses.
 </t>
-<t hangText="Discovery secrets:">
-O(M). Same behavior as in the pairing secret case.
+<t hangText="Group public keys:">
+O(M): The client will compose O(M) queries to discover all the
+servers that it is interested in. There will be at most O(M) responses.
 </t>
-<t hangText="Discovery public key:">
-O(M). Same behavior as in the pairing secret case.
+<t hangText="Shared symmetric secret:">
+O(M): Same behavior as in the pairing secret case.
+</t>
+<t hangText="Shared public secret:">
+O(M): Same behavior as in the pairing secret case.
 </t>
 </list>
 </t>
@@ -322,10 +351,13 @@ solutions:
 No caching possible, since there are separate server instances for 
 separate clients. 
 </t>
-<t hangText="Discovery secrets:">
+<t hangText="Group public keys:">
+Caching is possible for among members of a group.
+</t>
+<t hangText="Shared symmetric secret:">
 Caching is possible, since there is just one server instance.
 </t>
-<t hangText="Discovery public key:">
+<t hangText="Shared public secret:">
 Caching is possible, since there is just one server instance.
 </t>
 </list>
@@ -349,7 +381,7 @@ owned by that client. The effects will be the following:
 <t>
 <list style="hanging" >
 <t hangText="Pairing secrets:">
-With a valid pairing key, the adversary can issue queries or parse annoucements.
+With a valid pairing key, the adversary can issue queries and parse announcements.
 It will be able to track the presence of all the servers to which the
 compromised client was paired. It may be able to track other clients of these servers if
 it can infer that multiple independent instances are tied to the same
@@ -357,8 +389,16 @@ server, for example by assessing the IP address associated with a specific
 instance. It will not be able to impersonate the servers
 for other clients. 
 </t>
-<t hangText="Discovery secrets:">
-With a valid discovery secret, the adversary can issue queries or parse annoucements.
+<t hangText="Group public keys:">
+With a valid group private key, the adversary can issue queries and parse announcements.
+It will be able to track the presence of all the servers with which the compromised group
+was authenticated. It may be able to track other clients of these servers if
+it can infer that multiple independent instances are tied to the same
+server, for example by assessing the IP address associated with a specific
+instance. It will not be able to impersonate the servers for other clients or groups. 
+</t>
+<t hangText="Shared symmetric secret:">
+With a valid discovery secret, the adversary can issue queries and parse announcements.
 It will be able to track the presence of all the servers that the
 compromised client could discover. It will also be able to detect the clients 
 that try to use one of these servers. This will not reveal the identity of
@@ -366,8 +406,8 @@ the client, but it can provide clues for network analysis. The adversary
 will also be able to spoof the server's announcements, which could be the
 first step in a serve impersonation attack. 
 </t>
-<t hangText="Discovery public key:">
-With a valid discovery public key, the adversary can issue queries or parse annoucements.
+<t hangText="Shared public secret:">
+With a valid discovery public key, the adversary can issue queries and parse announcements.
 It will be able to track the presence of all the servers that the
 compromised client could discover. It will also be able to detect the clients 
 that try to use one of these servers. This will not reveal the identity of
@@ -378,30 +418,38 @@ server.
 </list>
 </t>
 </section>
-<section title="Remediation of compromized client" >
+<section title="Revocation" >
 <t>
-Let's assume that an administrator discovers that a client has been
-compromised. As seen in <xref target="clientcompro" />, compromising a client
+Assume an administrator discovers that a client has been compromised. 
+As seen in <xref target="clientcompro" />, compromising a client
 entails a loss of privacy for all the servers that the client was authorized
 to use, and also to all other users of these servers. The worse situation happens
 in the solutions based on "discovery secrets", but no solution provides
 a great defense. The administrator will have to remedy the problem,
-which means different
-actions based on the different solutions:
+which means different actions based on the different solutions:
 </t>
 <t>
 <list style="hanging" >
 <t hangText="Pairing secrets:">
 The administrator will need to revoke the pairing keys used by the compromised
-client. This implies contacting the O(M) servers to which the client was paired. 
+client. This implies contacting the O(M) servers to which the client was paired.
 </t>
-<t hangText="Discovery secrets:">
+<t hangText="Group public key:">
+The administrator must revoke the private key associated with the compromised 
+group members and, depending on the cryptographic scheme in use, generate new 
+private keys for each existing, non-compromised group member. The latter is 
+necessary for public key encryption schemes wherein group access is permitted
+based on ownership (or not) to an included private key. Some public key
+encryption schemes permit revocation without rotating any non-compromised
+group member private keys.
+</t>
+<t hangText="Shared symmetric secret:">
 The administrator will need to revoke the discovery secrets used by the compromised
 client. This implies contacting the O(M) servers that the client was
 authorized to discover, and then the O(N) clients of each of these servers. 
 This will require a total of O(N*M) management operations.
 </t>
-<t hangText="Discovery public key:">
+<t hangText="Shared public secret:">
 The administrator will need to revoke the discovery public keys used by the compromised
 client. This implies contacting the O(M) servers that the client was
 authorized to discover, and then the O(N) clients of each of these servers. Just as in the
@@ -427,9 +475,9 @@ various solutions.
 </t>
 <t>
 As remedy, once the compromise is discovered, the administrator
-will have to revoke the credentials of O(N) clients connected to that server.
-In all cases, this could be done by notifying all potential clients
-to not trust this particular server anymore.
+will have to revoke the credentials of O(N) clients, or O(G) groups, 
+connected to that server. In all cases, this could be done by notifying 
+all potential clients to not trust this particular server anymore.
 </t>
 </section>
 
@@ -437,7 +485,7 @@ to not trust this particular server anymore.
 
 <section title="Summary of tradeoffs" >
 <t>
-In the preceeding sections, we have reviewed the scaling and privacy properties of
+In the preceding sections, we have reviewed the scaling and privacy properties of
 three possible secret sharing solutions for privacy discovery. The comparison can
 be summed up as follow:
 </t>
@@ -450,18 +498,25 @@ be summed up as follow:
     <c>Poor</c>
     <c>Bad</c>
     <c>Good</c>
-    <c>Discovery secret</c>
+
+    <c>Group public key</c>
+    <c>Good</c>
+    <c>Poor</c>
+    <c>Maybe</c>
+
+    <c>Shared symmetric secret</c>
     <c>Good</c>
     <c>Really bad</c>
     <c>Poor</c>
-    <c>Discovery public key</c>
+
+    <c>Shared public secret</c>
     <c>Good</c>
     <c>Bad</c>
     <c>Maybe</c>
 </texttable>
 <t>
 All three types of solutions provide reasonable privacy when the secrets are
-not compromized. They all have poor resistance to the compromise of
+not compromised. They all have poor resistance to the compromise of
 one a client, as explained in <xref target="clientcompro" />, but
 pairing secret and public key solution have the advantage of
 preventing server impersonation. The
@@ -471,7 +526,6 @@ a compromise with a smaller number of updates, but the public key
 solution may benefit from a simple recovery solution using
 some form of "revocation list".
 </t>
-
 </section>
 
 
@@ -501,8 +555,10 @@ This draft results from initial feedback in the DNS SD working group on <xref ta
 
 <references title="Informative References">
        &I-D.ietf-dnssd-privacy;
+       &I-D.ietf-dnssd-pairing;
        &rfc6762;
        &rfc6763;
+       &rfc7858;
 
 <reference anchor="KW14a" target="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=7011331">
   <front>
@@ -532,8 +588,135 @@ This draft results from initial feedback in the DNS SD working group on <xref ta
   <seriesInfo name="DOI" value="10.1109/HPCC.2014.141"/>
 </reference>
 
+<reference anchor="Wu16" target="https://arxiv.org/pdf/1604.06959.pdf%22">
+  <front>
+    <title>Privacy, discovery, and authentication for the internet of things</title>
+    <author initials='D.' surname='Wu' fullname='David Wu'>
+      <organization>Stanford University</organization>
+    </author>
+    <author initials='A.' surname='Taly' fullname='Ankur Taly'>
+      <organization>Google</organization>
+    </author>
+    <author initials='A.' surname='Shankar' fullname='Asim Shankar'>
+      <organization>Google</organization>
+    </author>
+    <author initials='D.' surname='Boneh' fullname='Dan Boneh'>
+      <organization>Stanford University</organization>
+    </author>
+    <date year="2016"/>
+  </front>
+</reference>
+
+<reference anchor="SIGMA" target="http://link.springer.com/content/pdf/10.1007/978-3-540-45146-4_24.pdf">
+  <front>
+    <title>SIGMA: The 'SIGn-and-MAc'approach to authenticated Diffie-Hellman and its use in the IKE protocols</title>
+    <author initials='H.' surname='Krawczyk' fullname='Hugo Krawczyk'>
+      <organization>EE Department, Technion, Haifa, Israel, and IBM T.J. Watson Research Center</organization>
+    </author>
+    <date year="2003"/>
+  </front>
+</reference>
+
 
 </references>  
+
+<section title="Survey of Implementations">
+
+    <t>This section surveys several private service discovery designs in the context of the threat model
+      detailed above.</t>
+
+    <section title="DNS-SD Privacy Extensions">
+      <t>Huitema and Kaiser <xref target="I-D.ietf-dnssd-privacy"></xref> decompose 
+      private service discovery into two stages: (1) identify specific peers offering 
+      private services, and (2) issue unicast DNS-SD queries to those hosts after 
+      connecting over TLS using a previously agreed upon pre-shared key (PSK), or 
+      pairing key. Any out-of-band pairing mechanism will suffice for PSK establishment, 
+      though the authors specifically mention <xref target="I-D.ietf-dnssd-pairing"></xref> 
+      as the pairing mechanism. Step (1) is done by broadcasting "private instance names"
+      to local peers, using service-specific pairing keys. A private instance name N' 
+      for some service with name N is composed of a unique nonce r and commitment to r using 
+      N_k. Commitments are constructed by hashing N_k with the nonce. Only owners of N_k 
+      may verify its correctness and, upon doing so, answer as needed. The draft recommends 
+      randomizing hostnames in SRV responses along with other identifiers, such as 
+      MAC addresses, to minimize likability to specific hosts. 
+      Note that this alone does not prevent fingerprinting and tracking using that hostname.
+      However, when done in conjunction with steps (1) and (2) above, this mitigates fingerprinting
+      and tracking since different hostnames are used across venues and real discovered services 
+      remain hidden behind private instance names.</t>
+
+      <t>After discovering its peers, a node will directly connect to each device using 
+        TLS, authenticated with a PSK derived from each associated pairing key, and 
+        issue DNS-SD queries per usual. DNS messages are formulated as per 
+        <xref target="RFC7858"></xref>.</t>
+
+      <t>As an optimization, the authors recommend that each nonce be deterministically 
+        derived based on time so that commitment proofs may be precomputed asynchronously. 
+        This avoids O(N*M) computation, where N is the number of nodes in a local network 
+        and M is the number of per-node pairings.</t>
+
+      <t>
+        This system has the following properties:
+        <list style='numbers'>
+          <t>Symmetric work load: clients and servers can pre-compute private instance names
+            as a function of their pairing secret and predictable nonce.</t>
+          <t>Mutual identity privacy: Both client and server identities are hidden from 
+            active and passive attackers that do not subvert the pairing process.</t>
+          <t>No client set size hiding: The number of private instance names
+          reveals the number of unique pairings a server has with its clients. (Servers
+          may pad the list of records with random instance names, though this introduces more
+          work for clients.)</t>
+          <t>Unlinkability: Private service names are unlinkable to post-discovery TLS 
+            connections. (Note that if deterministic nonces repeat, servers risk linkability
+            across private service names.)</t>
+          <t>No fingerprinting: Assuming servers use fresh nonces per private instance name, 
+            advertisements change regularly.</t>
+        </list>
+      </t>
+    </section>
+
+    <section title="Private IoT">
+      <t>Boneh et al. <xref target="Wu16"></xref> developed an approach for private service 
+      discovery that reduces to private mutual authentication. Moreover, it should be 
+      infeasible for any adversary to forge advertisements or impersonate anyone else on 
+      the network. Specifically, service discoverers only wish to reveal their identity 
+      to services they trust, and vice versa. Existing protocols such as TLS, IKE, and 
+      <xref target="SIGMA">SIGMA</xref> require that one side reveal its identity first. 
+      Their approach first allocates, via some policy manager, key pairs associated with 
+      human-readable policy names. For example, user Alice might have a key pair associated 
+      with the names /Alice, /Alice/Family, and /Alice/Device. Her key is bound to each 
+      of these names. Authentication policies (and trust models) are then expressed as 
+      policy prefix patterns, e.g., /Alice/*. Broadcast messages are encrypted to policies. 
+      For example, Alice might encrypt a message m to the policy /Bob/*. Only Bob, who 
+      owns a private key bound to, e.g., /Bob/Devices, can decrypt m. (This procedure 
+      uses a form of identity-based encryption called prefix-based encryption. Readers 
+      are referred to <xref target="Wu16"></xref> for a thorough description.)</t>
+
+      <t>Using prefix- and policy-based encryption, service discovery is decomposed into 
+        two steps: (1) service announcement and (2) key exchange, similar to 
+        <xref target="I-D.ietf-dnssd-privacy"></xref>. Announcements carry service 
+        identities, ephemeral key shares, and a signature, all encrypted under the 
+        service’s desired policy prefix, e.g., /Alice/Family/*. Upon receipt of an 
+        announcement, clients with matching policy private keys can decrypt the 
+        announcement and use the ephemeral key share to perform an Authenticated 
+        Diffie Hellman key exchange with the service. Upon completion, the derived 
+        shared secret may be used for any further communication, e.g., DNS-SD queries, 
+        if needed.</t>
+
+      <t>
+        This system has the following properties:
+        <list style='numbers'>
+          <t>Asymmetric work load: computation for clients is on the order of advertisements.</t>
+          <t>Mutual identity privacy: Both client and server identities are hidden from 
+            active and passive attackers.</t>
+          <t>Client set size hiding: Policy-based encryption advertisements hides the number
+            of clients with matching policy keys.</t>
+          <t>Unlinkability: Client initiated connections are unlinkable to service advertisements (modulo
+            network-layer connection information, such as advertisement origin and connection destination).</t>
+        </list>
+      </t>
+    </section>
+
+  </section>
 
 </back>
 </rfc>
