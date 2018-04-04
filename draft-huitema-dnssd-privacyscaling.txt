@@ -4,8 +4,8 @@
 
 Network Working Group                                         C. Huitema
 Internet-Draft                                      Private Octopus Inc.
-Intended status: Informational                            March 31, 2018
-Expires: October 2, 2018
+Intended status: Informational                             April 4, 2018
+Expires: October 6, 2018
 
 
                     DNS-SD Privacy Scaling Tradeoffs
@@ -24,10 +24,9 @@ Abstract
    The draft currently progressing in the DNSSD Working Group assumes
    peer-to-peer pairing between the service to be discovered and each of
    its client.  This has good security properties, but create scaling
-   issues.  Each server needs to publish as many announcements as it has
-   paired clients.  Each client needs to process all announcements from
-   all servers present in the network.  This leads to large number of
-   operations when each server is paired with many clients.
+   issues, because each server needs to publish as many announcements as
+   it has paired clients.  This leads to large number of operations when
+   servers are paired with many clients.
 
    Different designs are possible.  For example, if there was only one
    server "discovery key" known by each authorized client, each server
@@ -46,22 +45,23 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
 
 
 
-Huitema                  Expires October 2, 2018                [Page 1]
+
+Huitema                  Expires October 6, 2018                [Page 1]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 2, 2018.
+   This Internet-Draft will expire on October 6, 2018.
 
 Copyright Notice
 
@@ -70,7 +70,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Huitema                  Expires October 2, 2018                [Page 2]
+Huitema                  Expires October 6, 2018                [Page 2]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    requesting identities along with information about the offered and
@@ -165,9 +165,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 3]
+Huitema                  Expires October 6, 2018                [Page 3]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    Clients discover the required server by issuing queries containing
@@ -221,9 +221,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 4]
+Huitema                  Expires October 6, 2018                [Page 4]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    reasons, we assume here that the discovery public key is kept secret,
@@ -277,9 +277,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 5]
+Huitema                  Expires October 6, 2018                [Page 5]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    mapping behavior, clients send a query for a service type, and will
@@ -333,9 +333,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 6]
+Huitema                  Expires October 6, 2018                [Page 6]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    Shared public secret:  Caching is possible, since there is just one
@@ -389,9 +389,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 7]
+Huitema                  Expires October 6, 2018                [Page 7]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
       able to track the presence of all the servers that the compromised
@@ -445,9 +445,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 8]
+Huitema                  Expires October 6, 2018                [Page 8]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 4.3.  Effect of compromized server
@@ -501,9 +501,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018                [Page 9]
+Huitema                  Expires October 6, 2018                [Page 9]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 7.  IANA Considerations
@@ -539,8 +539,8 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
               articleDetails.jsp?arnumber=7056899>.
 
    [RFC6762]  Cheshire, S. and M. Krochmal, "Multicast DNS", RFC 6762,
-              DOI 10.17487/RFC6762, February 2013, <https://www.rfc-
-              editor.org/info/rfc6762>.
+              DOI 10.17487/RFC6762, February 2013,
+              <https://www.rfc-editor.org/info/rfc6762>.
 
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
@@ -557,9 +557,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
 
 
 
-Huitema                  Expires October 2, 2018               [Page 10]
+Huitema                  Expires October 6, 2018               [Page 10]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    [SIGMA]    Krawczyk, H., "SIGMA: The 'SIGn-and-MAc'approach to
@@ -613,9 +613,9 @@ A.1.  DNS-SD Privacy Extensions
 
 
 
-Huitema                  Expires October 2, 2018               [Page 11]
+Huitema                  Expires October 6, 2018               [Page 11]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    This system has the following properties:
@@ -669,9 +669,9 @@ A.2.  Private IoT
 
 
 
-Huitema                  Expires October 2, 2018               [Page 12]
+Huitema                  Expires October 6, 2018               [Page 12]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          March 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
    Family/*. Upon receipt of an announcement, clients with matching
@@ -725,4 +725,4 @@ Author's Address
 
 
 
-Huitema                  Expires October 2, 2018               [Page 13]
+Huitema                  Expires October 6, 2018               [Page 13]
