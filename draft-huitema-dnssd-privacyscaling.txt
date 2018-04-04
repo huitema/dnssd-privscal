@@ -4,9 +4,8 @@
 
 Network Working Group                                         C. Huitema
 Internet-Draft                                      Private Octopus Inc.
-Intended status: Informational                                   C. Wood
-Expires: October 4, 2018                                      Apple Inc.
-                                                           April 2, 2018
+Intended status: Informational                             April 4, 2018
+Expires: October 6, 2018
 
 
                     DNS-SD Privacy Scaling Tradeoffs
@@ -53,7 +52,8 @@ Status of This Memo
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 1]
+
+Huitema                  Expires October 6, 2018                [Page 1]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -61,7 +61,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 4, 2018.
+   This Internet-Draft will expire on October 6, 2018.
 
 Copyright Notice
 
@@ -99,7 +99,7 @@ Table of Contents
    Appendix A.  Survey of Implementations  . . . . . . . . . . . . .  11
      A.1.  DNS-SD Privacy Extensions . . . . . . . . . . . . . . . .  11
      A.2.  Private IoT . . . . . . . . . . . . . . . . . . . . . . .  12
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 2]
+Huitema                  Expires October 6, 2018                [Page 2]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -165,7 +165,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 3]
+Huitema                  Expires October 6, 2018                [Page 3]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -221,7 +221,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 4]
+Huitema                  Expires October 6, 2018                [Page 4]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -277,7 +277,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 5]
+Huitema                  Expires October 6, 2018                [Page 5]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -333,7 +333,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 6]
+Huitema                  Expires October 6, 2018                [Page 6]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -389,7 +389,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 7]
+Huitema                  Expires October 6, 2018                [Page 7]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -445,7 +445,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 8]
+Huitema                  Expires October 6, 2018                [Page 8]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -501,7 +501,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018                [Page 9]
+Huitema                  Expires October 6, 2018                [Page 9]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -557,7 +557,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema & Wood           Expires October 4, 2018               [Page 10]
+Huitema                  Expires October 6, 2018               [Page 10]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -613,7 +613,7 @@ A.1.  DNS-SD Privacy Extensions
 
 
 
-Huitema & Wood           Expires October 4, 2018               [Page 11]
+Huitema                  Expires October 6, 2018               [Page 11]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -669,7 +669,7 @@ A.2.  Private IoT
 
 
 
-Huitema & Wood           Expires October 4, 2018               [Page 12]
+Huitema                  Expires October 6, 2018               [Page 12]
 
 Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
@@ -697,7 +697,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
        information, such as advertisement origin and connection
        destination).
 
-Authors' Addresses
+Author's Address
 
    Christian Huitema
    Private Octopus Inc.
@@ -707,13 +707,6 @@ Authors' Addresses
    Email: huitema@huitema.net
 
 
-   Christopher A. Wood
-   Apple Inc.
-   One Apple Park Way
-   Cupertino, California  95014
-   U.S.A.
-
-   Email: cawood@apple.com
 
 
 
@@ -725,4 +718,11 @@ Authors' Addresses
 
 
 
-Huitema & Wood           Expires October 4, 2018               [Page 13]
+
+
+
+
+
+
+
+Huitema                  Expires October 6, 2018               [Page 13]
