@@ -99,7 +99,7 @@ a serious privacy problem arises.
 <t>
 The draft currently progressing in the DNSSD Working Group assumes peer-to-peer pairing 
 between the service to be discovered and each of its client. This has good security properties, 
-but create scaling issues, because Eeach server needs to publish as many announcements as it 
+but create scaling issues, because each server needs to publish as many announcements as it 
 has paired clients. This leads to large number of operations when servers are paired
 with many clients.
 </t>
