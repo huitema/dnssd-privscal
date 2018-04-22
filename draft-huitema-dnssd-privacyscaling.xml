@@ -97,9 +97,9 @@ when mobile devices engage in DNS Service Discovery over Multicast DNS at a publ
 a serious privacy problem arises.
 </t>
 <t>
-The draft currently progressing in the DNSSD Working Group assumes peer-to-peer pairing 
-between the service to be discovered and each of its client. This has good security properties, 
-but create scaling issues, because each server needs to publish as many announcements as it 
+The draft currently progressing in the DNS-SD Working Group assumes peer-to-peer pairing 
+between the service to be discovered and each of its clients. This has good security properties, 
+but creates scaling issues, because each server needs to publish as many announcements as it 
 has paired clients. This leads to large number of operations when servers are paired
 with many clients.
 </t>
@@ -122,7 +122,7 @@ service discovery in local networks.
 It is very convenient for users, but it requires the public exposure 
 of the offering and requesting identities along with information about the offered and 
 requested services.
-Parts of the published information can seriously breach the user's privacy.
+Parts of the published information can seriously breach the users' privacy.
 These privacy issues and potential solutions are discussed in <xref target="KW14a" />
 and <xref target="KW14b" />.
 </t>
@@ -131,7 +131,7 @@ A recent draft <xref target="I-D.ietf-dnssd-privacy" /> proposes to solve this p
 by relying on device pairing. Only clients that have paired with a device would be
 able to discover that device, and the discovery would not be observable by third 
 parties. This design has a number of good privacy and security properties, but it
-has a cost, because each server must provide separate annoucements for each clients.
+has a cost, because each server must provide separate annoucements for each client.
 In this draft, we compare scaling and privacy properties of three different designs:
 </t>
 <t>
@@ -160,7 +160,7 @@ third parties must not be able to discover that a specific server or device is
 currently present on the network, and they must not be able to discover that a
 particular client is trying to discover a particular service. This cannot be
 achieved without some kind of shared secret between client and servers. We
-review here three particular design for sharing these secrets.
+review here three particular designs for sharing these secrets.
 </t>
 <section title="Pairing secrets" anchor="pairsecret" >
 <t>
@@ -207,7 +207,7 @@ and defined as a coarse function of time.
 Clients discover the required server by issuing queries containing the current nonce and
 proof. Servers respond to these queries if the nonce matches the current 
 time interval, and if the proof matches the hash of the nonce with one of the
-discovery secret.
+discovery secrets.
 </t>
 </section>
 
@@ -272,7 +272,7 @@ The average total number of servers present during discovery.
 The big difference between the three proposals is the number of 
 records that need to be published by a server when using DNS-SD
 in server mode, or the number of  broadcast messages that needs 
-to be announced per server in MDNS mode: 
+to be announced per server in mDNS mode: 
 </t>
 <t>
 <list style="hanging" >
@@ -292,7 +292,7 @@ O(1): One record for all (shared) clients.
 </t>
 <t>
 There are other elements of scaling, linked to the mapping of the privacy
-discovery service to DNSSD. DNSSD identifies services by a combination of
+discovery service to DNS-SD. DNS-SD identifies services by a combination of
 a service type and an instance name. In classic mapping behavior,
 clients send a query for a service type, and will receive
 responses from each server instance supporting that type:
@@ -314,7 +314,7 @@ O(P): One record per server present.
 </list>
 </t>
 <t>
-The DNSSD Privacy draft suggests an optimization that considerably reduces
+The DNS-SD Privacy draft suggests an optimization that considerably reduces
 the considerations about scaling of responses -- see section 4.6 of 
 <xref target="I-D.ietf-dnssd-privacy" />. In that case, clients compose
 the list of instance names that they are looking for, and specifically
@@ -340,8 +340,8 @@ O(M): Same behavior as in the pairing secret case.
 </t>
 <t>
 Finally, another element of scaling is cacheability. Responses to DNS 
-queries can be cached by DNS resolvers, and MDNS responses can be
-cached by MDNS resolvers. If several clients send the same queries,
+queries can be cached by DNS resolvers, and mDNS responses can be
+cached by mDNS resolvers. If several clients send the same queries,
 and if previous responses could be cached, the client can be
 served immediately. There are of course differences between the
 solutions:
@@ -518,8 +518,8 @@ be summed up as follow:
 <t>
 All three types of solutions provide reasonable privacy when the secrets are
 not compromised. They all have poor resistance to the compromise of
-one a client, as explained in <xref target="clientcompro" />, but
-pairing secret and public key solution have the advantage of
+a client, as explained in <xref target="clientcompro" />, but
+pairing secret and public key solutions have the advantage of
 preventing server impersonation. The
 pairing secret solution scales worse than the discovery secret and
 discovery public key solutions. The pairing secret solution can recover from
@@ -534,7 +534,7 @@ some form of "revocation list".
 
 <section title="Security Considerations">
 <t> 
-This document does not specify a solution, but inform future choices when
+This document does not specify a solution, but discusses future choices when
 providing privacy for discovery protocols.
 </t> 
 </section>
