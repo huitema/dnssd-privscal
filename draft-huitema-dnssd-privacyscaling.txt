@@ -4,12 +4,12 @@
 
 Network Working Group                                         C. Huitema
 Internet-Draft                                      Private Octopus Inc.
-Intended status: Informational                             April 4, 2018
-Expires: October 6, 2018
+Intended status: Informational                             June 30, 2018
+Expires: January 1, 2019
 
 
                     DNS-SD Privacy Scaling Tradeoffs
-                 draft-huitema-dnssd-privacyscaling-00
+                 draft-huitema-dnssd-privacyscaling-01
 
 Abstract
 
@@ -21,9 +21,9 @@ Abstract
    Discovery over Multicast DNS at a public hotspot, a serious privacy
    problem arises.
 
-   The draft currently progressing in the DNSSD Working Group assumes
+   The draft currently progressing in the DNS-SD Working Group assumes
    peer-to-peer pairing between the service to be discovered and each of
-   its client.  This has good security properties, but create scaling
+   its clients.  This has good security properties, but creates scaling
    issues, because each server needs to publish as many announcements as
    it has paired clients.  This leads to large number of operations when
    servers are paired with many clients.
@@ -53,15 +53,15 @@ Status of This Memo
 
 
 
-Huitema                  Expires October 6, 2018                [Page 1]
+Huitema                  Expires January 1, 2019                [Page 1]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 6, 2018.
+   This Internet-Draft will expire on January 1, 2019.
 
 Copyright Notice
 
@@ -92,7 +92,7 @@ Table of Contents
      4.2.  Revocation  . . . . . . . . . . . . . . . . . . . . . . .   8
      4.3.  Effect of compromized server  . . . . . . . . . . . . . .   9
    5.  Summary of tradeoffs  . . . . . . . . . . . . . . . . . . . .   9
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
    8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  10
    9.  Informative References  . . . . . . . . . . . . . . . . . . .  10
@@ -109,14 +109,14 @@ Table of Contents
 
 
 
-Huitema                  Expires October 6, 2018                [Page 2]
+Huitema                  Expires January 1, 2019                [Page 2]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    requesting identities along with information about the offered and
    requested services.  Parts of the published information can seriously
-   breach the user's privacy.  These privacy issues and potential
+   breach the users' privacy.  These privacy issues and potential
    solutions are discussed in [KW14a] and [KW14b].
 
    A recent draft [I-D.ietf-dnssd-privacy] proposes to solve this
@@ -125,7 +125,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    discovery would not be observable by third parties.  This design has
    a number of good privacy and security properties, but it has a cost,
    because each server must provide separate annoucements for each
-   clients.  In this draft, we compare scaling and privacy properties of
+   client.  In this draft, we compare scaling and privacy properties of
    three different designs:
 
    o  The individual pairing defined in [I-D.ietf-dnssd-privacy],
@@ -148,7 +148,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    network, and they must not be able to discover that a particular
    client is trying to discover a particular service.  This cannot be
    achieved without some kind of shared secret between client and
-   servers.  We review here three particular design for sharing these
+   servers.  We review here three particular designs for sharing these
    secrets.
 
 2.1.  Pairing secrets
@@ -165,9 +165,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema                  Expires October 6, 2018                [Page 3]
+Huitema                  Expires January 1, 2019                [Page 3]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    Clients discover the required server by issuing queries containing
@@ -204,7 +204,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    Clients discover the required server by issuing queries containing
    the current nonce and proof.  Servers respond to these queries if the
    nonce matches the current time interval, and if the proof matches the
-   hash of the nonce with one of the discovery secret.
+   hash of the nonce with one of the discovery secrets.
 
 2.4.  Shared public key
 
@@ -221,9 +221,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema                  Expires October 6, 2018                [Page 4]
+Huitema                  Expires January 1, 2019                [Page 4]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    reasons, we assume here that the discovery public key is kept secret,
@@ -261,7 +261,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    The big difference between the three proposals is the number of
    records that need to be published by a server when using DNS-SD in
    server mode, or the number of broadcast messages that needs to be
-   announced per server in MDNS mode:
+   announced per server in mDNS mode:
 
    Pairing secrets:  O(N): One record per client.
 
@@ -272,14 +272,14 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
    Shared public key:  O(1): One record for all (shared) clients.
 
    There are other elements of scaling, linked to the mapping of the
-   privacy discovery service to DNSSD.  DNSSD identifies services by a
+   privacy discovery service to DNS-SD.  DNS-SD identifies services by a
    combination of a service type and an instance name.  In classic
 
 
 
-Huitema                  Expires October 6, 2018                [Page 5]
+Huitema                  Expires January 1, 2019                [Page 5]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    mapping behavior, clients send a query for a service type, and will
@@ -295,7 +295,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
    Shared public secret:  O(P): One record per server present.
 
-   The DNSSD Privacy draft suggests an optimization that considerably
+   The DNS-SD Privacy draft suggests an optimization that considerably
    reduces the considerations about scaling of responses -- see section
    4.6 of [I-D.ietf-dnssd-privacy].  In that case, clients compose the
    list of instance names that they are looking for, and specifically
@@ -316,8 +316,8 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
       case.
 
    Finally, another element of scaling is cacheability.  Responses to
-   DNS queries can be cached by DNS resolvers, and MDNS responses can be
-   cached by MDNS resolvers.  If several clients send the same queries,
+   DNS queries can be cached by DNS resolvers, and mDNS responses can be
+   cached by mDNS resolvers.  If several clients send the same queries,
    and if previous responses could be cached, the client can be served
    immediately.  There are of course differences between the solutions:
 
@@ -333,9 +333,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema                  Expires October 6, 2018                [Page 6]
+Huitema                  Expires January 1, 2019                [Page 6]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
    Shared public secret:  Caching is possible, since there is just one
@@ -381,7 +381,7 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
       that try to use one of these servers.  This will not reveal the
       identity of the client, but it can provide clues for network
       analysis.  The adversary will also be able to spoof the server's
-      announcements, which could be the first step in a serve
+      announcements, which could be the first step in a server
       impersonation attack.
 
    Shared public secret:  With a valid discovery public key, the
@@ -389,9 +389,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema                  Expires October 6, 2018                [Page 7]
+Huitema                  Expires January 1, 2019                [Page 7]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
       able to track the presence of all the servers that the compromised
@@ -445,9 +445,9 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 
 
 
-Huitema                  Expires October 6, 2018                [Page 8]
+Huitema                  Expires January 1, 2019                [Page 8]
 
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
 
 
 4.3.  Effect of compromized server
@@ -475,36 +475,41 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
      |         Solution        | Scaling | Resistance | Remediation |
      +-------------------------+---------+------------+-------------+
      |      Pairing secret     |   Poor  |    Bad     |     Good    |
-     |     Group public key    |   Good  |    Poor    |    Maybe    |
+     |     Group public key    |  Medium |    Bad     |    Maybe    |
      | Shared symmetric secret |   Good  | Really bad |     Poor    |
      |   Shared public secret  |   Good  |    Bad     |    Maybe    |
      +-------------------------+---------+------------+-------------+
 
               Table 1: Comparison of secret sharing solutions
 
-   All three types of solutions provide reasonable privacy when the
+   All four types of solutions provide reasonable privacy when the
    secrets are not compromised.  They all have poor resistance to the
-   compromise of one a client, as explained in Section 4.1, but pairing
-   secret and public key solution have the advantage of preventing
-   server impersonation.  The pairing secret solution scales worse than
-   the discovery secret and discovery public key solutions.  The pairing
+   compromise of a client, as explained in Section 4.1, but sharing a
+   symmetric secret is much worse because it does not prevent server
+   impersonation.  The pairing secret solution scales worse than the
+   discovery secret and discovery public key solutions.  The group
+   public key scales as the number of groups for the total set of
+   clients; this depends on group assignment and will be intermediate
+   between the pairing secret and shared secret solutions.  The pairing
    secret solution can recover from a compromise with a smaller number
-   of updates, but the public key solution may benefit from a simple
+   of updates, but the public key solutions may benefit from a simple
    recovery solution using some form of "revocation list".
+
+
+
+
+
+
+
+Huitema                  Expires January 1, 2019                [Page 9]
+
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
+
 
 6.  Security Considerations
 
-   This document does not specify a solution, but inform future choices
-   when providing privacy for discovery protocols.
-
-
-
-
-
-Huitema                  Expires October 6, 2018                [Page 9]
-
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
-
+   This document does not specify a solution, but discusses future
+   choices when providing privacy for discovery protocols.
 
 7.  IANA Considerations
 
@@ -513,19 +518,20 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
 8.  Acknowledgments
 
    This draft results from initial feedback in the DNS SD working group
-   on [I-D.ietf-dnssd-privacy].
+   on [I-D.ietf-dnssd-privacy].  The text on Group public keys is based
+   on Chris Wood's contributions.
 
 9.  Informative References
 
    [I-D.ietf-dnssd-pairing]
               Huitema, C. and D. Kaiser, "Device Pairing Using Short
-              Authentication Strings", draft-ietf-dnssd-pairing-03 (work
-              in progress), September 2017.
+              Authentication Strings", draft-ietf-dnssd-pairing-04 (work
+              in progress), April 2018.
 
    [I-D.ietf-dnssd-privacy]
               Huitema, C. and D. Kaiser, "Privacy Extensions for DNS-
-              SD", draft-ietf-dnssd-privacy-03 (work in progress),
-              September 2017.
+              SD", draft-ietf-dnssd-privacy-04 (work in progress), April
+              2018.
 
    [KW14a]    Kaiser, D. and M. Waldvogel, "Adding Privacy to Multicast
               DNS Service Discovery", DOI 10.1109/TrustCom.2014.107,
@@ -546,21 +552,20 @@ Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <https://www.rfc-editor.org/info/rfc6763>.
 
+
+
+
+
+
+Huitema                  Expires January 1, 2019               [Page 10]
+
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
+
+
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
-
-
-
-
-
-
-
-Huitema                  Expires October 6, 2018               [Page 10]
-
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
-
 
    [SIGMA]    Krawczyk, H., "SIGMA: The 'SIGn-and-MAc'approach to
               authenticated Diffie-Hellman and its use in the IKE
@@ -604,19 +609,20 @@ A.1.  DNS-SD Privacy Extensions
    associated pairing key, and issue DNS-SD queries per usual.  DNS
    messages are formulated as per [RFC7858].
 
+
+
+
+
+Huitema                  Expires January 1, 2019               [Page 11]
+
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
+
+
    As an optimization, the authors recommend that each nonce be
    deterministically derived based on time so that commitment proofs may
    be precomputed asynchronously.  This avoids O(N*M) computation, where
    N is the number of nodes in a local network and M is the number of
    per-node pairings.
-
-
-
-
-Huitema                  Expires October 6, 2018               [Page 11]
-
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
-
 
    This system has the following properties:
 
@@ -661,19 +667,18 @@ A.2.  Private IoT
    identity-based encryption called prefix-based encryption.  Readers
    are referred to [Wu16] for a thorough description.)
 
+
+
+Huitema                  Expires January 1, 2019               [Page 12]
+
+Internet-Draft      DNS-SD Privacy Scaling Tradeoffs           June 2018
+
+
    Using prefix- and policy-based encryption, service discovery is
    decomposed into two steps: (1) service announcement and (2) key
    exchange, similar to [I-D.ietf-dnssd-privacy].  Announcements carry
    service identities, ephemeral key shares, and a signature, all
    encrypted under the service's desired policy prefix, e.g., /Alice/
-
-
-
-Huitema                  Expires October 6, 2018               [Page 12]
-
-Internet-Draft      DNS-SD Privacy Scaling Tradeoffs          April 2018
-
-
    Family/*. Upon receipt of an announcement, clients with matching
    policy private keys can decrypt the announcement and use the
    ephemeral key share to perform an Authenticated Diffie Hellman key
@@ -720,9 +725,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Huitema                  Expires October 6, 2018               [Page 13]
+Huitema                  Expires January 1, 2019               [Page 13]

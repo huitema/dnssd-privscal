@@ -64,7 +64,7 @@
 <?rfc inline='yes' ?>
 
 <rfc category="info" 
-     docName="draft-huitema-dnssd-privacyscaling-00"
+     docName="draft-huitema-dnssd-privacyscaling-01"
      ipr="trust200902">
 
 <front>
@@ -405,7 +405,7 @@ compromised client could discover. It will also be able to detect the clients
 that try to use one of these servers. This will not reveal the identity of
 the client, but it can provide clues for network analysis. The adversary
 will also be able to spoof the server's announcements, which could be the
-first step in a serve impersonation attack. 
+first step in a server impersonation attack. 
 </t>
 <t hangText="Shared public secret:">
 With a valid discovery public key, the adversary can issue queries and parse announcements.
@@ -501,8 +501,8 @@ be summed up as follow:
     <c>Good</c>
 
     <c>Group public key</c>
-    <c>Good</c>
-    <c>Poor</c>
+    <c>Medium</c>
+    <c>Bad</c>
     <c>Maybe</c>
 
     <c>Shared symmetric secret</c>
@@ -516,21 +516,21 @@ be summed up as follow:
     <c>Maybe</c>
 </texttable>
 <t>
-All three types of solutions provide reasonable privacy when the secrets are
+All four types of solutions provide reasonable privacy when the secrets are
 not compromised. They all have poor resistance to the compromise of
 a client, as explained in <xref target="clientcompro" />, but
-pairing secret and public key solutions have the advantage of
-preventing server impersonation. The
+sharing a symmetric secret is much worse because it does not
+prevent server impersonation. The
 pairing secret solution scales worse than the discovery secret and
-discovery public key solutions. The pairing secret solution can recover from
+discovery public key solutions. The group public key scales as the 
+number of groups for the total set of clients; this depends on group
+assignment and will be intermediate between the pairing secret and
+shared secret solutions. The pairing secret solution can recover from
 a compromise with a smaller number of updates, but the public key
-solution may benefit from a simple recovery solution using
+solutions may benefit from a simple recovery solution using
 some form of "revocation list".
 </t>
 </section>
-
-
-
 
 <section title="Security Considerations">
 <t> 
@@ -547,7 +547,9 @@ This draft does not require any IANA action.
 
 <section title="Acknowledgments">
     <t>
-This draft results from initial feedback in the DNS SD working group on <xref target="I-D.ietf-dnssd-privacy" />.
+This draft results from initial feedback in the DNS SD working group on 
+<xref target="I-D.ietf-dnssd-privacy" />. The text on Group public keys is
+based on Chris Wood's contributions.
     </t>
 </section>
 </middle>
